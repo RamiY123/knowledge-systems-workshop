@@ -27,13 +27,19 @@ Perform only this step. End with output locations, validation results, and a
 participant inspection checklist. Do not start the next step automatically.
 """
         if command in config.get("utility_commands", []):
-            description = f"Submit one completed workshop source to the current shared workshop branch when explicitly requested."
+            description = f"Submit one completed workshop source through the participant's fork and a pull request when explicitly requested."
             body = f"""# Workshop utility: {name}
 
 Read {guide} in this repository and follow it for the participant's source.
-Be verbose: explain the target branch, files, Git operations, and actual result.
+Be verbose: explain the participant fork, trainer repository, submission branch,
+files, Git operations, and actual result.
+Explain each meaningful operation before executing it, show the scoped file list,
+and finish with the commit, verified fork push, PR link, and any remaining blocker.
 This is a submission utility, not another ingestion step. Do not complete missing
-exercises. Invoking it requests export, a scoped commit, and direct push without a PR.
+exercises. Invoking it requests export, fork creation/reuse, a scoped commit,
+push to the participant fork, and a PR targeting the trainer main branch.
+Preserve completed work in existing clones. Never push directly to trainer main.
+The instructor merges before updating Studio; this skill must not approve or merge.
 """
         front = f"---\nname: {name}\ndescription: {description}\n"
         yield f".agents/skills/{name}/SKILL.md", front + "---\n\n" + body

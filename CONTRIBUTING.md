@@ -1,68 +1,60 @@
 # Submit your source to the workshop demo
 
-Each participant works on one assigned source in their own clone of this repository.
-You do not need the private application repository, Java, Node, or Docker.
+Each participant works on one assigned source using their own GitHub account.
+You need read access and permission to fork the workshop repository. You do not
+need write access to the trainer repo, the private app, Java, Node, or Docker.
+For a private repository, the trainer must enable the necessary access/fork policy.
 
-Current first session: `workshop/session-01`. The trainer may supply a different
-`workshop/<session-name>` for later events. Development stays on main.
+## Before the workshop
 
-After completing the eleven steps, use `$submit-source source-01` in Codex or
-`/submit-source source-01` in Claude Code / Copilot. The skill handles export,
-a scoped commit, syncing, and direct push. The manual equivalent follows below.
+1. Sign in to GitHub with your own account and open the trainer repository.
+2. Choose **Fork** and create your own fork. If unavailable, ask the trainer to
+   resolve repository access; do not create a public copy of private content.
+3. Clone your fork and open the folder in your AI environment. Follow PREPARATION.md.
+4. Complete the eleven steps for your assigned source, one at a time.
 
-1. Clone the workshop repository using the URL and workshop branch supplied by the trainer:
-   `git clone --branch <workshop-branch> <workshop-repository-url>`.
-2. Open the cloned folder and follow PREPARATION.md. Stay on the shared workshop
-   branch; everyone contributes directly to that branch.
-3. Complete the eleven manual steps for your assigned source. Inspect the outputs
-   and retrieval review with the trainer. Do not run later steps automatically.
-4. Export the completed result. This validates existing artifacts; it does not
-   perform missing steps or call the embedding API.
+Already cloned the trainer repository? Keep your folder and completed work.
+The submit-source skill can create your fork and add it as a separate push remote.
 
-   Windows: `.\.venv\Scripts\python.exe tools/export_submission.py source-01`
+## Submit from your AI environment
 
-   macOS: `./.venv/bin/python tools/export_submission.py source-01`
+After the eleven steps, invoke:
 
-5. Review `submissions/source-01/bundle.json` and `review.md`. They contain your
-   prepared text, provenance, vectors, and evaluation review. Confirm the files
-   contain only approved workshop data and no credentials or personal information.
-6. Stage only your submission:
+- Codex: `$submit-source source-01`
+- Claude Code / VS Code Copilot: `/submit-source source-01`
 
-   ```sh
-   git add submissions/source-01
-   git diff --cached --stat
-   git commit -m "Submit source-01 knowledge"
-   git pull --rebase
-   git push
-   ```
+Replace source-01 with your assigned ID. The skill explains each operation:
 
-7. Tell the trainer your source is pushed. There is no pull request or PR review.
-   A local commit alone does not transfer it to the instructor's computer.
+1. Verify your account and create or reuse your fork.
+2. Validate and export bundle.json and review.md into submissions/<source>/.
+3. Create a submission branch and commit only those two files.
+4. Push to your fork and open a PR targeting the trainer's main.
+5. Show the PR link and any remaining blocker.
 
-Replace source-01 and the branch placeholders with your own assignment. Each
-participant owns a different source folder to avoid overlapping edits. If another
-participant pushes first and Git rejects your push, run `git pull --rebase` and
-`git push` again. Never force-push. If a conflict occurs, ask the trainer to resolve
-the source assignment rather than overwriting someone else's work.
-Keep `.env`, `.venv`, and `workspace/` local. Do not force-add them.
+Check the PR's destination and changed files. The instructor merges it; participants
+do not perform a separate review exercise. Sending a PR does not immediately add
+the knowledge to Studio. Do not push to the trainer's main or force-push. Stop on
+source ownership conflicts rather than overwriting another contribution.
+Keep .env, .venv, workspace, and local databases out of Git. Enter keys privately.
+
+If automatic GitHub operations are unavailable, create the fork in GitHub, push
+only the submission branch using your own Git credentials, then choose **Contribute
+> Open pull request** on your fork. Select the trainer repo, base main, and your
+submission branch. Preserve local work while resolving authentication problems.
 
 ## Instructor collection
 
-Before the workshop, give participants repository write access and use a dedicated
-workshop branch that permits direct pushes without requiring PRs. Keep normal
-protections on other branches. Assign a unique source folder to each participant.
+Assign one unique source per participant. Merge the submitted PRs into main, then
+run `$update-studio` or `/update-studio` from the private app or parent workspace.
+It fast-forwards the dedicated .workshop-live checkout and verifies the local source
+catalog. Refresh Studio's source list. Existing passage embeddings travel inside
+JSON bundles; no SQLite merge or re-embedding is required.
 
-On the demo computer, run `$update-studio` or `/update-studio` from the private app
-or parent workspace. It fast-forwards the selected session's dedicated
-`.workshop-live/` checkout while `knowledge-systems-workshop/` stays on main. The app mounts
-`submissions/` read-only and reloads it for each tool call. Refresh the source list
-in the chat. No merged SQLite database or re-embedding is needed: the MCP service
-searches the exported vectors across submitted bundles and preserves source IDs.
+Workflow: **participant fork and PR; instructor merge, update-studio, Refresh**.
+The lab's retrieval review file is a learning artifact, separate from GitHub review.
 
-The workflow is: **participant commit + push → instructor pull → Studio Refresh**.
-The retrieval review file is a learning artifact from the lab, not a GitHub approval.
-
+Before the next event, archive the completed main with a Git tag and remove
+submissions in a normal cleanup commit. Never reset or force-push history.
 The app accepts schema version 1, text-embedding-3-small at 512 dimensions, up to
-500 chunks per source and 100 sources. Historical documents remain searchable;
-version/applicability must be checked when selecting evidence. This is a teaching
-demo, not a production access-control or document-lifecycle system.
+500 chunks per source and 100 sources. Historical evidence requires checking
+version and applicability when answering.

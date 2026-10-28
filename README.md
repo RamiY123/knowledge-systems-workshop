@@ -83,12 +83,12 @@ work in their own clone; local workspace/ is ignored by Git. Do not modify sourc
 
 After all steps, export reviewed results to the tracked `submissions/<source>/`
 folder and commit only that source's submission. Follow [CONTRIBUTING.md](CONTRIBUTING.md)
-for export, commit, direct push to the shared workshop branch, and instructor pull.
-No pull request or PR review is required.
+for export, commit, push to your fork, and a pull request to the trainer main.
+The instructor merges the PR before pulling the contribution into Studio.
 
 Submission command after the eleven steps: **`$submit-source source-01`** in Codex,
-or **`/submit-source source-01`** in Claude Code / Copilot. It refuses to push to main.
-The initial shared branch is `workshop/session-01`; follow the trainer's session assignment.
+or **`/submit-source source-01`** in Claude Code / Copilot. It commits only your assigned submission, pushes to your fork, and opens a PR.
+Clone your own fork; use only your assigned source folder.
 
 ```text
 workspace/source-01/
@@ -126,5 +126,5 @@ rehearsed in each target environment before the event.
 Repository: https://github.com/RamiY123/knowledge-systems-workshop
 
 The repository is initially private. Grant participants access before cloning,
-and create the workshop branch when ready. Distribute API keys separately;
+and ensure participants can read and fork it. Distribute API keys separately;
 do not include keys or private answer keys in this repository.

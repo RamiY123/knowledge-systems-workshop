@@ -7,8 +7,10 @@ database server, local embedding model, or GPU is required.
 
 ## 1. Open the project
 
-The trainer shares the repository URL or archive. Clone it or extract the archive,
-then open its root folder in your AI environment. You should see README.md,
+The trainer shares the repository URL. Sign in to GitHub, create your own fork,
+and clone your fork. You need read access and permission to fork; write access to
+the trainer repository is unnecessary. If forking is blocked, ask the trainer.
+Open the cloned root folder in your AI environment. You should see README.md,
 sources/, steps/, and requirements.txt. Get your source assignment from the trainer.
 
 ## 2. Ask your AI to prepare the environment
